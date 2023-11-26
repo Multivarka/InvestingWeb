@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(#3760ac, #072444);
+}
+
+#mytable {
+    width: 400px;
+    margin: auto;
+    color: #fff;
+}
+
+.mytable {
+    width: 500px;
+    margin: auto;
+    color: #fff;
+}
+
+.sel {
+    display: inline;
+}
+
+.sel ul {
+    list-style-type: none;
+    margin-right: 50px;
+}
+
+.sel li {
+    text-align: center;
+}
+
+.sel li {
+    border-radius: 10px;
+    margin-bottom: 5px;
+    width: 100px;
+    background-color: #fff;
+}
+
+.sel li:hover {
+    background-color: #1659d7;
+    transition: 0.5s;
+    box-shadow: 3px 3px 5px black;
+}
+
+.sel li:hover a{
+    color: #fff;
+}
+
+
+th{
+    color: #fff;
+    border: 1px solid #ddd;
+    border-bottom: 3px solid #ddd;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+table {
+    border: 2px solid #ddd;
+    border-collapse: collapse;
+}
+
+td {
+    color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/*
+#mytbody tr:hover {
+    background-color: #b6b6b6;
+    color: #111;
+}
+*/
+
+
+.cats {
+    color: #444;
+    border-radius: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    width: 100%;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.sel {
+    display: flex;
+    flex-direction: row;
+}
+
+.update {
+    color: #111;
+    background: #fff;
+    padding: 2px 15px;
+    font-size: 20px;
+    border-radius: 5px;
+    margin-left: 3px;
+    margin-bottom: 10px;
+}
+
+
+.update:hover {
+    background: #ABABAB;
+    color: #191919;
+    transition: .2s;
+    box-shadow: 0 0 5px #111,
+                0 0 10px #111;
+}
+

@@ -1,0 +1,12 @@
+{% extends "registration/login.html" %}
+{% block content %}
+    <div class="login-box change">
+        <form method="post">
+        <div class="user-box">
+            {{user_form}}
+        </div>
+        {% csrf_token %}
+        <input class="sub" type="submit" value="Зарегистрироваться">
+    </form>
+    </div>
+{% endblock %}

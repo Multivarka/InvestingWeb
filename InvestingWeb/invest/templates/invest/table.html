@@ -1,0 +1,57 @@
+{% extends "base2.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+<div class="mytable">
+    <h1>Кросс-курсы валют</h1>
+<!--    <table id="mytable">-->
+<!--        <thead id="myth"></thead>-->
+<!--        <tbody id="mytbody">-->
+<!--            <script src="{% static 'js/table.js' %}"></script>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--    <div class="sel">-->
+<!--        <select class="cats" name="cat_select">-->
+<!--            {% for c in categories %}-->
+<!--                <option {% if c.slug == category.slug %} selected {% endif %} class="opt" value={{ c.name }}>{{ c.name }}</option>-->
+<!--            {% endfor %}-->
+<!--        </select>-->
+<!--        <a class="update"-->
+<!--           {% if cat_select.val != '' %} href="{% url 'update-table' category_slug=category.slug %}" {% endif %}>Обновить</a>-->
+<!--    </div>-->
+    <div class="sel">
+        <!-- Здесь будет список категорий -->
+        <ul>
+        {% for c in categories %}
+            <li {% if category.slug == c.slug %}class="selected" {% endif %}>
+                <a href="{{ c.slug }}">{{ c.name }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+
+        <table id="mytable">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Цена</th>
+                    <th>Изменение цены</th>
+                </tr>
+            </thead>
+            <tbody id="mytbody">
+                {% for product in products %}
+                    <tr>
+                        <td align="center">{{ product.title }}</td>
+                        <td align="center">{{ product.price_now }}</td>
+                        <td align="center">{{ product.price_change }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

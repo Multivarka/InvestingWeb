@@ -1,0 +1,12 @@
+{% extends "registration/login.html" %}
+{% block content %}
+    <div class="login-box">
+        <h1>Вы вышли из аккаунта</h1>
+        <p>
+            Вы успешно вышли из аккаунта.
+            Вы можете войти снова.
+        </p>
+        <div class="center"> <a class="logout-login" href="{% url 'login' %}">Войти</a></div>
+    </div>
+
+{% endblock %}

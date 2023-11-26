@@ -1,0 +1,9 @@
+{% extends "registration/login.html" %}
+{% block content %}
+    <div class="login-box change">
+        <h1>Успешная регистрация</h1>
+        <p>Добро пожаловать, {{ new_user.username }}!</p>
+        <p>Теперь вы можете войти</p>
+        <a class="logout-login" href="{% url 'login' %}">Войти</a>
+    </div>
+{% endblock %}

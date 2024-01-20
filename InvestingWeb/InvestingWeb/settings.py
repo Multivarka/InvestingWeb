@@ -25,7 +25,9 @@ SECRET_KEY = 'cp2zh62*o-(^5j6_%#@aq8j6p+zl8@itt#a=h74)27^z6$0l@_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*',]
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 #http://www.djangoproject.dev:8000/
 

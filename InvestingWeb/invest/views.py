@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from .models import ProductInvest, Category
 import requests
-import apimoex
+from parser import get_cat_info
 
 class PasswordChangeView(PasswordChangeView):
     form_class = PasswordChangingForm
@@ -64,36 +64,25 @@ def dashboard(request):
     {'section': 'dashboard'})
 
 
-def update_table():
-    with requests.Session() as session:
-        securities = [sec['SECID'] for sec in apimoex.get_board_securities(session)][:10]
-        for security in securities:
-            data = apimoex.get_board_history(session, security)[-2:]
-            volume1, value1 = data[-1]['VOLUME'], data[-1]['VALUE']
-            volume2, value2 = data[0]['VOLUME'], data[0]['VALUE']
-            perc = '+100%'
-            if volume1 > 0:
-                price = value1 / volume1
-                if volume2 > 0:
-                    price2 = value2 / volume2
-                    perc = round((price - price2) / price2 * 100, 2)
-                    res = f'+{perc}%' if perc > 0 else f'{perc}%'
-                    if not ProductInvest.objects.filter(title=security).exists():
-                        product = ProductInvest(category=Category.objects.get(slug="forex"), title=security,
-                                                price_now=round(price, 2), price_change=res)
-                        product.save()
-                    else:
-                        product = ProductInvest.objects.get(title=security)
-                        product.price_now = round(price, 2)
-                        product.price_change = res
-                        product.save()
-                    print(f'{security} - {price}({res})')
+def update_table(category):
+    session = requests.Session()
+    res = get_cat_info(session, category)
+    if not ProductInvest.objects.filter(title=res[0]).exists():
+        product = ProductInvest(category=Category.objects.get(slug="currencies"), title=res[0],
+                                price_now=round(res[1], 2), price_change=res[2])
+        product.save()
+    else:
+        product = ProductInvest.objects.get(title=res[0])
+        product.price_now = round(res[1], 2)
+        product.price_change = res[2]
+        product.save()
+    print(f'{res[0]} - {res[1]}({res[2]})')
 
 
 
 @login_required
-def table(request, category_slug='forex'):
-    # update_table()
+def table(request, category_slug='currencies'):
+    update_table(category_slug)
     category = None
     categories = Category.objects.all()
     products = ProductInvest.objects.all()

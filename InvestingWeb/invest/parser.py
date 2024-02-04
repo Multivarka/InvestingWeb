@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as bs
-from url_list import dict_url
+from .url_list import dict_url
 import lxml
 
 
@@ -18,7 +18,8 @@ def get_cat_info(session, category):
         list_change = table.find_all('td', {'aria-label': 'Change'})
         if len(list_name) == len(list_price) == len(list_change):
             for i in range(len(list_name)):
-                result += [[list_name[i].text, list_price[i].text, list_change[i].text]]
+                if list_name[i].text:
+                    result += [[list_name[i].text, float(list_price[i].text.replace(",", "")), list_change[i].text]]
         return result
 
 session = requests.Session()

@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from .models import ProductInvest, Category
 import requests
-from parser import get_cat_info
+from .parser import get_cat_info
 
 class PasswordChangeView(PasswordChangeView):
     form_class = PasswordChangingForm
@@ -67,16 +67,17 @@ def dashboard(request):
 def update_table(category):
     session = requests.Session()
     res = get_cat_info(session, category)
-    if not ProductInvest.objects.filter(title=res[0]).exists():
-        product = ProductInvest(category=Category.objects.get(slug="currencies"), title=res[0],
-                                price_now=round(res[1], 2), price_change=res[2])
-        product.save()
-    else:
-        product = ProductInvest.objects.get(title=res[0])
-        product.price_now = round(res[1], 2)
-        product.price_change = res[2]
-        product.save()
-    print(f'{res[0]} - {res[1]}({res[2]})')
+    for prod in res:
+        if not ProductInvest.objects.filter(title=prod[0]).exists():
+            product = ProductInvest(category=Category.objects.get(slug=category), title=prod[0],
+                                    price_now=prod[1], price_change=prod[2])
+            product.save()
+        else:
+            product = ProductInvest.objects.get(title=prod[0])
+            product.price_now = prod[1]
+            product.price_change = prod[2]
+            product.save()
+        print(f'{prod[0]} - {prod[1]}({prod[2]})')
 
 
 
@@ -87,7 +88,8 @@ def table(request, category_slug='currencies'):
     categories = Category.objects.all()
     products = ProductInvest.objects.all()
     if category_slug:
+        update_table(category_slug)
         category = categories.get(slug=category_slug)
         products = products.filter(category=category)
-    print(products)
+        print(products)
     return render(request, 'invest/table.html', {'products': products, 'categories': categories, 'category': category})

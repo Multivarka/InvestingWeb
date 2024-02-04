@@ -1,8 +1,11 @@
+html{
+    background: linear-gradient(#3760ac, #072444);
+    background-repeat: no-repeat;
+}
 body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background: linear-gradient(#3760ac, #072444);
 }
 
 #mytable {
